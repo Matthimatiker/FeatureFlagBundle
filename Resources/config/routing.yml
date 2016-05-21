@@ -1,0 +1,3 @@
+matthimatiker_feature_flag_homepage:
+    path:     /
+    defaults: { _controller: MatthimatikerFeatureFlagBundle:Default:index }

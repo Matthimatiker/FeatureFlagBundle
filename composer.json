@@ -1,0 +1,24 @@
+{
+    "name": "matthimatiker/feature-flag-bundle",
+    "description": "",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthias Molitor",
+            "email": "matthias@matthimatiker.de",
+            "role": "Developer"
+        }
+    ],
+
+    "require": {
+        "php": "^5.5.9 | ^7.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.0.0",
+        "satooshi/php-coveralls": "^1.0.0"
+    },
+
+    "autoload": {
+    }
+}
