@@ -20,5 +20,8 @@
     },
 
     "autoload": {
+        "psr-4": {
+            "Matthimatiker\\FeatureFlagBundle\\": "."
+        }
     }
 }
