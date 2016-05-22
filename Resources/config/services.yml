@@ -1,4 +1,10 @@
 services:
-#    matthimatiker_feature_flag.example:
-#        class: Matthimatiker\FeatureFlagBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    # Allows "FEATURE_*" as role names.
+    matthimatiker_feature_flag.feature_voter:
+        class: "Symfony\\Component\\Security\\Core\\Authorization\\Voter\\RoleHierarchyVoter"
+        arguments:
+            - "@security.role_hierarchy"
+            - "FEATURE_"
+        public: false
+        tags:
+            - { name: security.voter }
