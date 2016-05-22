@@ -9,9 +9,6 @@
 - Activate repository at [Coveralls](https://coveralls.io)
 - Publish at [Packagist](https://packagist.org/)
 - Create webhook that pushes repository updates to [Packagist](https://packagist.org/)
-- Configure HipChat webhook (post repository updates to "Github" room)
-- Create a [Zap](https://zapier.com/) that converts GitHub issues to Fogbug cases
-- Activate job in Jenkins CI
 
 ## Motivation: Why does this project exist? ##
 
