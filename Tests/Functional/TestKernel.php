@@ -3,6 +3,7 @@
 namespace Matthimatiker\FeatureFlagBundle\Tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
@@ -23,7 +24,9 @@ class TestKernel extends Kernel
      */
     public function registerBundles()
     {
-        return array();
+        return array(
+            new SecurityBundle()
+        );
     }
 
     /**
@@ -60,6 +63,6 @@ class TestKernel extends Kernel
      */
     protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
     {
-
+        $loader->load(__DIR__.'/_files/config/security.yml');
     }
 }

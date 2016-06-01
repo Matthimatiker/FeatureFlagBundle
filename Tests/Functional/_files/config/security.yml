@@ -1,0 +1,10 @@
+security:
+    role_hierarchy:
+        ROLE_USER:
+            - FEATURE_APP
+        ROLE_ADMIN:
+            - ROLE_USER
+            - FEATURE_ADMIN_DASHBOARD
+        FEATURE_ADMIN_DASHBOARD:
+            - FEATURE_LIST_USERS
+            - FEATURE_LIST_REGISTRATIONS
