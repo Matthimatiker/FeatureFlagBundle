@@ -18,6 +18,16 @@ class TestKernel extends Kernel
     use MicroKernelTrait;
 
     /**
+     * @param string $environment The environment
+     * @param bool $debug Whether to enable debugging or not
+     */
+    public function __construct($environment = 'test', $debug = true)
+    {
+        parent::__construct($environment, $debug);
+    }
+
+
+    /**
      * Returns an array of bundles to register.
      *
      * @return BundleInterface[] An array of bundle instances.
