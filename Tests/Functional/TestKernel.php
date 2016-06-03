@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
@@ -79,6 +80,30 @@ class TestKernel extends Kernel
     }
 
     /**
+     * Boots the current kernel.
+     */
+    public function boot()
+    {
+        if (!$this->booted) {
+            $this->deleteCache();
+        }
+        parent::boot();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function shutdown()
+    {
+        if (!$this->booted) {
+            return;
+        }
+        parent::shutdown();
+        $this->deleteCache();
+    }
+
+
+    /**
      * Gets the cache directory.
      *
      * @return string The cache directory
@@ -86,5 +111,23 @@ class TestKernel extends Kernel
     public function getCacheDir()
     {
         return __DIR__ . '/_files/cache';
+    }
+
+    /**
+     * Cleans up when the kernel is removed.
+     *
+     * @link http://php.net/manual/en/language.oop5.decon.php
+     */
+    public function __destruct()
+    {
+        $this->deleteCache();
+    }
+
+    /**
+     * Removes the whole cache directory.
+     */
+    private function deleteCache()
+    {
+        (new Filesystem())->remove($this->getCacheDir());
     }
 }
