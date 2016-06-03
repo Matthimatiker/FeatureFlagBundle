@@ -4,6 +4,11 @@ namespace Matthimatiker\FeatureFlagBundle\Tests\Functional;
 
 use Symfony\Component\Security\Core\User\User;
 
+/**
+ * This test case relies on the role hierarchy that is defined in _files/config/security.yml.
+ *
+ * The test case does *not* depend on the users that are defined in the config file.
+ */
 class FeatureFlagBundleTest extends \PHPUnit_Framework_TestCase
 {
     /**
