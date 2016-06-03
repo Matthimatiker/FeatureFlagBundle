@@ -78,6 +78,20 @@ class FeatureFlagBundleTest extends \PHPUnit_Framework_TestCase
         $this->assertGranted('ROLE_USER');
     }
 
+    public function testGrantsAccessToFeaturesThatAreAssignedToGuests()
+    {
+        $this->authenticateAnonymously();
+
+        $this->assertGranted('FEATURE_GUEST');
+    }
+
+    public function testDeniesAccessToGuestFeaturesForLoggedInUser()
+    {
+        $this->authenticateAsUser();
+
+        $this->assertDenied('FEATURE_GUEST');
+    }
+
     private function authenticateAsUser()
     {
         $this->kernel->authenticateAs(new User('test', 'any-password', array('ROLE_USER')));
@@ -86,6 +100,11 @@ class FeatureFlagBundleTest extends \PHPUnit_Framework_TestCase
     private function authenticateAsAdmin()
     {
         $this->kernel->authenticateAs(new User('test', 'any-password', array('ROLE_ADMIN')));
+    }
+
+    private function authenticateAnonymously()
+    {
+        $this->kernel->authenticateAs(null);
     }
 
     /**
