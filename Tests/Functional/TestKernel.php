@@ -11,6 +11,10 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
+use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Minimal kernel for testing.
@@ -102,7 +106,6 @@ class TestKernel extends Kernel
         $this->deleteCache();
     }
 
-
     /**
      * Gets the cache directory.
      *
@@ -111,6 +114,23 @@ class TestKernel extends Kernel
     public function getCacheDir()
     {
         return __DIR__ . '/_files/cache';
+    }
+
+    /**
+     * Simulates authentication as the provided user.
+     *
+     * Pass null to authenticate as anonymous user.
+     *
+     * @param UserInterface|null $user
+     */
+    public function authenticateAs(UserInterface $user = null)
+    {
+        if ($user === null) {
+            $token = new AnonymousToken('any-secret', 'anon.');
+        } else {
+            $token = new UsernamePasswordToken($user, 'any-password', 'test_provider', $user->getRoles());
+        }
+        $this->getTokenStorage()->setToken($token);
     }
 
     /**
@@ -129,5 +149,13 @@ class TestKernel extends Kernel
     private function deleteCache()
     {
         (new Filesystem())->remove($this->getCacheDir());
+    }
+
+    /**
+     * @return TokenStorageInterface
+     */
+    private function getTokenStorage()
+    {
+        return $this->getContainer()->get('security.token_storage');
     }
 }
