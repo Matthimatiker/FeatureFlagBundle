@@ -92,6 +92,13 @@ class FeatureFlagBundleTest extends \PHPUnit_Framework_TestCase
         $this->assertDenied('FEATURE_GUEST');
     }
 
+    public function testDeniesAccessToUserFeaturesForGuests()
+    {
+        $this->authenticateAnonymously();
+
+        $this->assertDenied('FEATURE_APP');
+    }
+
     private function authenticateAsUser()
     {
         $this->kernel->authenticateAs(new User('test', 'any-password', array('ROLE_USER')));
