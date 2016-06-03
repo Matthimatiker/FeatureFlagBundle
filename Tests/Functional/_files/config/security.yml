@@ -1,4 +1,20 @@
 security:
+    providers:
+        test_provider:
+            memory:
+                users:
+                    user:
+                        password: user
+                        roles:    [ROLE_USER]
+                    admin:
+                        password: admin
+                        roles:    [ROLE_ADMIN]
+
+    firewalls:
+        main:
+            pattern: ^/
+            anonymous: ~
+
     role_hierarchy:
         ROLE_USER:
             - FEATURE_APP
