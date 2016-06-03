@@ -2,6 +2,7 @@
 
 namespace Matthimatiker\FeatureFlagBundle\Tests\Functional;
 
+use Matthimatiker\FeatureFlagBundle\MatthimatikerFeatureFlagBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
@@ -42,7 +43,8 @@ class TestKernel extends Kernel
     {
         return array(
             new FrameworkBundle(),
-            new SecurityBundle()
+            new SecurityBundle(),
+            new MatthimatikerFeatureFlagBundle()
         );
     }
 
