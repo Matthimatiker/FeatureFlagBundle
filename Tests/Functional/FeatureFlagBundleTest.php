@@ -2,6 +2,8 @@
 
 namespace Matthimatiker\FeatureFlagBundle\Tests\Functional;
 
+use Symfony\Component\Security\Core\User\User;
+
 class FeatureFlagBundleTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -31,31 +33,75 @@ class FeatureFlagBundleTest extends \PHPUnit_Framework_TestCase
 
     public function testGrantsAccessToAssignedFeature()
     {
+        $this->authenticateAsUser();
 
+        $this->assertGranted('FEATURE_APP');
     }
 
     public function testDeniesAccessToNotAssignedFeature()
     {
+        $this->authenticateAsUser();
 
+        $this->assertDenied('FEATURE_ADMIN_DASHBOARD');
     }
 
     public function testDeniesAccessToNotExistingFeature()
     {
+        $this->authenticateAsUser();
 
+        $this->assertDenied('FEATURE_MISSING');
     }
 
     public function testGrantsAccessToFeaturesInheritedFromAnotherFeature()
     {
+        $this->authenticateAsAdmin();
 
+        $this->assertGranted('FEATURE_LIST_USERS');
     }
 
     public function testGrantsAccessToFeatureInheritedFromAnotherRole()
     {
+        $this->authenticateAsAdmin();
 
+        $this->assertGranted('FEATURE_APP');
     }
 
     public function testGrantsAccessToRoleInheritedFromAnotherRole()
     {
+        $this->authenticateAsAdmin();
 
+        $this->assertGranted('ROLE_USER');
+    }
+
+    private function authenticateAsUser()
+    {
+        $this->kernel->authenticateAs(new User('test', 'any-password', array('ROLE_USER')));
+    }
+
+    private function authenticateAsAdmin()
+    {
+        $this->kernel->authenticateAs(new User('test', 'any-password', array('ROLE_ADMIN')));
+    }
+
+    /**
+     * @param string $role
+     */
+    private function assertGranted($role)
+    {
+        $this->assertTrue(
+            $this->kernel->getAuthorizationChecker()->isGranted($role),
+            'The logged in user does not have access to "' . $role . '"."'
+        );
+    }
+
+    /**
+     * @param string $role
+     */
+    private function assertDenied($role)
+    {
+        $this->assertFalse(
+            $this->kernel->getAuthorizationChecker()->isGranted($role),
+            'The logged in user has access to "' . $role . '"."'
+        );
     }
 }
