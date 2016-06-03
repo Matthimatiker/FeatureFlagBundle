@@ -14,6 +14,7 @@ use Symfony\Component\Routing\RouteCollectionBuilder;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -131,6 +132,16 @@ class TestKernel extends Kernel
             $token = new UsernamePasswordToken($user, 'any-password', 'test_provider', $user->getRoles());
         }
         $this->getTokenStorage()->setToken($token);
+    }
+
+    /**
+     * Returns the authorization checker that is used to test the permissions of the logged in user.
+     *
+     * @return AuthorizationCheckerInterface
+     */
+    public function getAuthorizationChecker()
+    {
+        return $this->getContainer()->get('security.authorization_checker');
     }
 
     /**
