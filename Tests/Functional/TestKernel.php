@@ -77,4 +77,14 @@ class TestKernel extends Kernel
         $c->loadFromExtension('framework', ['secret' => 'any-secret']);
         $loader->load(__DIR__.'/_files/config/security.yml');
     }
+
+    /**
+     * Gets the cache directory.
+     *
+     * @return string The cache directory
+     */
+    public function getCacheDir()
+    {
+        return __DIR__ . '/_files/cache';
+    }
 }
