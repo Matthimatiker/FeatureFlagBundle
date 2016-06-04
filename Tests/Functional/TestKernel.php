@@ -147,16 +147,6 @@ class TestKernel extends Kernel
     }
 
     /**
-     * Cleans up when the kernel is removed.
-     *
-     * @link http://php.net/manual/en/language.oop5.decon.php
-     */
-    public function __destruct()
-    {
-        $this->deleteCache();
-    }
-
-    /**
      * Removes the whole cache directory.
      */
     private function deleteCache()
