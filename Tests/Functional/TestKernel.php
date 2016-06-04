@@ -92,7 +92,7 @@ class TestKernel extends Kernel
     public function boot()
     {
         if (!$this->booted) {
-            $this->deleteCache();
+            $this->cleanUp();
         }
         parent::boot();
     }
@@ -106,7 +106,7 @@ class TestKernel extends Kernel
             return;
         }
         parent::shutdown();
-        $this->deleteCache();
+        $this->cleanUp();
     }
 
     /**
@@ -116,7 +116,15 @@ class TestKernel extends Kernel
      */
     public function getCacheDir()
     {
-        return __DIR__ . '/_files/cache';
+        return __DIR__ . '/_files/test-kernel/cache';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLogDir()
+    {
+        return __DIR__ . '/_files/test-kernel/logs';
     }
 
     /**
@@ -147,11 +155,28 @@ class TestKernel extends Kernel
     }
 
     /**
+     * Cleans up kernel directories that may have been created.
+     */
+    private function cleanUp()
+    {
+        $this->deleteCache();
+        $this->deleteLogs();
+    }
+
+    /**
      * Removes the whole cache directory.
      */
     private function deleteCache()
     {
         (new Filesystem())->remove($this->getCacheDir());
+    }
+
+    /**
+     * Removes the log directory.
+     */
+    private function deleteLogs()
+    {
+        (new Filesystem())->remove($this->getLogDir());
     }
 
     /**
