@@ -3,6 +3,7 @@
 namespace Matthimatiker\FeatureFlagBundle\Tests\Functional;
 
 use Matthimatiker\FeatureFlagBundle\Security\AuthenticationAwareRoleHierarchy;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 class AuthenticationAwareRoleHierarchyTest extends \PHPUnit_Framework_TestCase
@@ -20,7 +21,10 @@ class AuthenticationAwareRoleHierarchyTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->decorator = new AuthenticationAwareRoleHierarchy();
+        $this->decorator = new AuthenticationAwareRoleHierarchy(
+            $this->getMock(RoleHierarchyInterface::class),
+            $this->getMock(AuthorizationCheckerInterface::class)
+        );
     }
 
     /**
