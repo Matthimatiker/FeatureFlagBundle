@@ -8,3 +8,27 @@ services:
         public: false
         tags:
             - { name: security.voter }
+
+    matthimatiker_feature_flag.role_hierarchy.authentication_aware_role_hierarchy:
+        class: "Matthimatiker\\FeatureFlagBundle\\Security\\AuthenticationAwareRoleHierarchy"
+        decorates: "security.role_hierarchy"
+        arguments:
+            - "@matthimatiker_feature_flag.role_hierarchy.authentication_aware_role_hierarchy.inner"
+            - "@matthimatiker_feature_flag.role_hierarchy.authorization_checker"
+        public: false
+
+    matthimatiker_feature_flag.role_hierarchy.authorization_checker:
+        class: "Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationChecker"
+        arguments:
+            - "@security.token_storage"
+            - "@security.authentication.manager"
+            - "@matthimatiker_feature_flag.role_hierarchy.decision_manager"
+            - "%security.access.always_authenticate_before_granting%"
+        public: false
+
+    matthimatiker_feature_flag.role_hierarchy.decision_manager:
+        class: "Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManager"
+        arguments:
+            -
+                - "@security.access.authenticated_voter"
+        public: false

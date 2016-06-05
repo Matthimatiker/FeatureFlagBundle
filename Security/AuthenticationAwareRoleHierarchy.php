@@ -3,6 +3,8 @@
 namespace Matthimatiker\FeatureFlagBundle\Security;
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
+use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 
@@ -16,6 +18,16 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
 class AuthenticationAwareRoleHierarchy implements RoleHierarchyInterface
 {
     /**
+     * @var RoleHierarchyInterface
+     */
+    private $innerHierarchy = null;
+
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $authorizationChecker = null;
+
+    /**
      * @param RoleHierarchyInterface $innerHierarchy
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
@@ -23,7 +35,8 @@ class AuthenticationAwareRoleHierarchy implements RoleHierarchyInterface
         RoleHierarchyInterface $innerHierarchy,
         AuthorizationCheckerInterface $authorizationChecker
     ) {
-
+        $this->innerHierarchy = $innerHierarchy;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -38,6 +51,16 @@ class AuthenticationAwareRoleHierarchy implements RoleHierarchyInterface
      */
     public function getReachableRoles(array $roles)
     {
-        // TODO: Implement getReachableRoles() method.
+        $permissions = array(
+            AuthenticatedVoter::IS_AUTHENTICATED_ANONYMOUSLY,
+            AuthenticatedVoter::IS_AUTHENTICATED_REMEMBERED,
+            AuthenticatedVoter::IS_AUTHENTICATED_FULLY
+        );
+        foreach ($permissions as $permission) {
+            if ($this->authorizationChecker->isGranted($permission)) {
+                $roles[] = new Role($permission);
+            }
+        }
+        return $this->innerHierarchy->getReachableRoles($roles);
     }
 }
