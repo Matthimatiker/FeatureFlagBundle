@@ -24,6 +24,6 @@ security:
         FEATURE_ADMIN_DASHBOARD:
             - FEATURE_LIST_USERS
             - FEATURE_LIST_REGISTRATIONS
-        # Guest features, not available for logged in users.
+        # Features depending on IS_AUTHENTICATED_* permissions.
         IS_AUTHENTICATED_ANONYMOUSLY:
-            - FEATURE_GUEST
+            - FEATURE_FOR_ALL

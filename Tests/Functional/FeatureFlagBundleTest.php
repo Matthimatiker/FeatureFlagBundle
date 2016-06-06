@@ -78,18 +78,18 @@ class FeatureFlagBundleTest extends \PHPUnit_Framework_TestCase
         $this->assertGranted('ROLE_USER');
     }
 
-    public function testGrantsAccessToFeaturesThatAreAssignedToGuests()
+    public function testGrantsAccessToFeaturesThatAreAssignedToAnonymous()
     {
         $this->authenticateAnonymously();
 
-        $this->assertGranted('FEATURE_GUEST');
+        $this->assertGranted('FEATURE_FOR_ALL');
     }
 
-    public function testDeniesAccessToGuestFeaturesForLoggedInUser()
+    public function testDeniesAccessToAnonymousFeaturesForLoggedInUser()
     {
         $this->authenticateAsUser();
 
-        $this->assertDenied('FEATURE_GUEST');
+        $this->assertGranted('FEATURE_FOR_ALL');
     }
 
     public function testDeniesAccessToUserFeaturesForGuests()
