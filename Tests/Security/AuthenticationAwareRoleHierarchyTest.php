@@ -40,4 +40,19 @@ class AuthenticationAwareRoleHierarchyTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(RoleHierarchyInterface::class, $this->decorator);
     }
+
+    public function testDoesNotPassAdditionalRolesToInnerHierarchyIfNotAvailable()
+    {
+
+    }
+
+    public function testPassesAvailablePermissionsToInnerHierarchy()
+    {
+
+    }
+
+    public function testReturnsReachableRolesFromInnerHierarchy()
+    {
+
+    }
 }
