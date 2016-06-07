@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
  *
  * These roles can be used to assign features only to guests.
  */
-class AdditionalAnonymousRolesAuthenticator implements AuthenticationProviderInterface
+class AdditionalAnonymousRolesAuthenticationProvider implements AuthenticationProviderInterface
 {
     /**
      * @param AnonymousAuthenticationProvider $innerProvider
