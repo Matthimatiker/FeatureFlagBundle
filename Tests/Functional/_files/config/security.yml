@@ -13,7 +13,8 @@ security:
     firewalls:
         main:
             pattern: ^/
-            anonymous: ~
+            anonymous:
+                secret: "any-secret"
 
     role_hierarchy:
         ROLE_USER:

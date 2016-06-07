@@ -138,6 +138,7 @@ class TestKernel extends Kernel
     {
         if ($user === null) {
             $token = new AnonymousToken('any-secret', 'anon.');
+            $token = $this->getContainer()->get('security.authentication.manager')->authenticate($token);
         } else {
             $token = new UsernamePasswordToken($user, 'any-password', 'test_provider', $user->getRoles());
         }
