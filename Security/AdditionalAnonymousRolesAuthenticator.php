@@ -1,6 +1,6 @@
 <?php
 
-namespace Matthimatiker\FeatureFlagBundle\Tests\Functional;
+namespace Matthimatiker\FeatureFlagBundle\Security;
 
 use Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
