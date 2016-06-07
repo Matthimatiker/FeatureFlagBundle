@@ -99,6 +99,20 @@ class FeatureFlagBundleTest extends \PHPUnit_Framework_TestCase
         $this->assertDenied('FEATURE_APP');
     }
 
+    public function testGrantsAnonymousRoleToGuest()
+    {
+        $this->authenticateAnonymously();
+
+        $this->assertGranted('ROLE_ANONYMOUS');
+    }
+
+    public function testDoesNotGrantAnonymousRoleToLoggedInUser()
+    {
+        $this->authenticateAsUser();
+
+        $this->assertDenied('ROLE_ANONYMOUS');
+    }
+
     private function authenticateAsUser()
     {
         $this->kernel->authenticateAs(new User('test', 'any-password', array('ROLE_USER')));
