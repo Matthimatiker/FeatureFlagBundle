@@ -12,6 +12,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
+use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -138,7 +139,7 @@ class TestKernel extends Kernel
     {
         if ($user === null) {
             $token = new AnonymousToken('any-secret', 'anon.');
-            $token = $this->getContainer()->get('security.authentication.manager')->authenticate($token);
+            $token = $this->getAuthenticationManager()->authenticate($token);
         } else {
             $token = new UsernamePasswordToken($user, 'any-password', 'test_provider', $user->getRoles());
         }
@@ -186,5 +187,13 @@ class TestKernel extends Kernel
     private function getTokenStorage()
     {
         return $this->getContainer()->get('security.token_storage');
+    }
+
+    /**
+     * @return AuthenticationManagerInterface
+     */
+    private function getAuthenticationManager()
+    {
+        return $this->getContainer()->get('security.authentication.manager');
     }
 }
