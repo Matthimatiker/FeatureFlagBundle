@@ -1,6 +1,6 @@
 {
     "name": "matthimatiker/feature-flag-bundle",
-    "description": "",
+    "description": "Feature flags and advanced role management on the shoulders of giants.",
     "minimum-stability": "stable",
     "license": "MIT",
     "authors": [
