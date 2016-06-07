@@ -1,3 +1,6 @@
+parameters:
+    matthimatiker_feature_flag.guest_roles.roles: ["ROLE_ANONYMOUS"]
+
 services:
     # Allows "FEATURE_*" as role names.
     matthimatiker_feature_flag.feature_voter:
@@ -42,5 +45,5 @@ services:
         arguments:
             # The first argument is the replaced provider; it will be injected by the bundle extension.
             - ~
-            - ["ROLE_ANONYMOUS"]
+            - "%matthimatiker_feature_flag.guest_roles.roles%"
         public: false
