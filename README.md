@@ -12,6 +12,25 @@ It helps you to:
 
 ## Installation ##
 
+Install the bundle via [Composer](https://getcomposer.org):
+
+    php composer.phar require matthimatiker/feature-flag-bundle
+
+Enable the bundle in your kernel:
+
+    <?php
+    // app/AppKernel.php
+
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...
+            new Matthimatiker\FeatureFlagBundle\MatthimatikerFeatureFlagBundle(),
+            // ...
+        );
+        // ...
+    }
+
 ## Usage ##
 
 - config
