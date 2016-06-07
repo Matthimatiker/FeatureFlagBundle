@@ -1,6 +1,6 @@
 <?php
 
-namespace Matthimatiker\FeatureFlagBundle\Tests\Functional;
+namespace Matthimatiker\FeatureFlagBundle\Tests\Security;
 
 use Matthimatiker\FeatureFlagBundle\Security\AuthenticationAwareRoleHierarchy;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
