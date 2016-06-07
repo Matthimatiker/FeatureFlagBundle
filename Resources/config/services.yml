@@ -9,6 +9,7 @@ services:
         tags:
             - { name: security.voter }
 
+    # Allows using the IS_AUTHENTICATED_* permissions in the role hierarchy.
     matthimatiker_feature_flag.role_hierarchy.authentication_aware_role_hierarchy:
         class: "Matthimatiker\\FeatureFlagBundle\\Security\\AuthenticationAwareRoleHierarchy"
         decorates: "security.role_hierarchy"
@@ -31,4 +32,15 @@ services:
         arguments:
             -
                 - "@security.access.authenticated_voter"
+        public: false
+
+    # Adds special roles for guests that can be used to assign features that are not available
+    # to logged in users.
+    matthimatiker_feature_flag.guest_roles.authentication_provider:
+        class: "Matthimatiker\\FeatureFlagBundle\\Security\\AdditionalAnonymousRolesAuthenticationProvider"
+        abstract: true
+        arguments:
+            # The first argument is the replaced provider; it will be injected by the bundle extension.
+            - ~
+            - ["ROLE_ANONYMOUS"]
         public: false
