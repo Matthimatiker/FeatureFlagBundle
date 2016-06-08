@@ -66,8 +66,20 @@ To distinguish features from roles, they are prefixed with ``FEATURE_*``.
 
 #### Grouping Features ####
 
-- normal users
-- admins
+Like normal roles in the hierarchy, features can be grouped. This allows you to compose new features from sub-features:
+
+    FEATURE_BLOG_USER:
+        - FEATURE_BLOG_READ
+        - FEATURE_BLOG_WRITE
+    
+    FEATURE_BLOG_ADMIN:
+        - FEATURE_BLOG_USER
+        - FEATURE_BLOG_DELETE
+        
+In the example above, any user that has the permission ``FEATURE_BLOG_ADMIN`` will also inherit the permissions
+``FEATURE_BLOG_WRITE``, ``FEATURE_BLOG_WRITE`` and ``FEATURE_BLOG_DELETE``. Composing features in this way 
+guarantees fine-grained permission control. Want to prevent the deletion of blog posts? Just remove 
+``FEATURE_BLOG_DELETE`` from the hierarchy.
 
 #### Features For All Users ####
 
