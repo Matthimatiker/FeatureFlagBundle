@@ -33,6 +33,8 @@ Enable the bundle in your kernel:
 
 ## Usage ##
 
+### Configure Features ###
+
 Features are assigned to roles. You connect features and roles in your ``security.yml``
 via Symfony's well known [hierarchical roles](http://symfony.com/doc/current/book/security.html#hierarchical-roles):
 
@@ -59,10 +61,15 @@ via Symfony's well known [hierarchical roles](http://symfony.com/doc/current/boo
             ROLE_ANONYMOUS:
                 - FEATURE_LOGIN
 
+The ``security.yml`` is the central place to map features to roles.
 To distinguish features from roles, they are prefixed with ``FEATURE_*``.
-The ``security.yml`` is the central place to map features to roles. Access should be checked against 
-the features using the existing mechanisms in Symfony. Of course you can also still check access against 
-roles, although it should not be necessary.
+
+### Access Control ###
+
+Access should be checked against the features using the existing mechanisms in Symfony. 
+Of course you can also still check access against roles, although it should not be necessary.
+
+#### Controller Actions ####
 
 You can check access to contoller actions in the [same way as with roles](http://symfony.com/doc/current/book/security.html#securing-controllers-and-other-code):
 
@@ -74,11 +81,23 @@ You can check access to contoller actions in the [same way as with roles](http:/
         // ...
     }
     
+#### Twig Templates #### 
+   
 Within your Twig templates, you can use the [is_granted() function](http://symfony.com/doc/current/book/security.html#access-control-in-templates):
 
     {% if is_granted('FEATURE_NEWSLETTER_REGISTRATION') %}
         <a href="...">Register now</a>
     {% endif %}
+
+#### Other Areas ####
+
+You can check against features anywhere you used roles before, for example in the
+[access_control section](http://symfony.com/doc/current/book/security.html#securing-url-patterns-access-control)
+of your ``security.yml``, together with Symfony's
+[controller helper methods](http://symfony.com/doc/current/book/security.html#securing-controllers-and-other-code)
+or directly with the
+[security.authorization_checker](http://symfony.com/doc/current/book/security.html#securing-controllers-and-other-code)
+service.
 
 ## Initialization Tasks (remove this block once you are done) ##
 
