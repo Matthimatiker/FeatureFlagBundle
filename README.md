@@ -64,6 +64,12 @@ via Symfony's well known [hierarchical roles](http://symfony.com/doc/current/boo
 The ``security.yml`` is the central place to map features to roles.
 To distinguish features from roles, they are prefixed with ``FEATURE_*``.
 
+#### Grouping Features ####
+
+#### Features for All Users ####
+
+#### Features Only For Guests ####
+
 ### Access Control ###
 
 Access should be checked against the features using the existing mechanisms in Symfony. 
