@@ -66,9 +66,16 @@ To distinguish features from roles, they are prefixed with ``FEATURE_*``.
 
 #### Grouping Features ####
 
-#### Features for All Users ####
+- normal users
+- admins
+
+#### Features For All Users ####
+
+permissions IS_AUTHENTICATED_ANONYMOUSLY
 
 #### Features Only For Guests ####
+
+ROLE_ANONYMOUS
 
 ### Access Control ###
 
