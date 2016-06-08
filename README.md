@@ -83,7 +83,12 @@ guarantees fine-grained permission control. Want to prevent the deletion of blog
 
 #### Features For All Users ####
 
-permissions IS_AUTHENTICATED_ANONYMOUSLY
+In plain Symfony, you cannot assign roles to anonymous users. This bundle overcomes that limitation by allowing the
+assignment of roles and features to Symfony's ``IS_AUTHENTICATED_*`` permissions in the hierarchy.
+
+Be aware that the existing [rules for the ``IS_AUTHENTICATED_*`` permissions](http://symfony.com/doc/current/book/security.html#checking-to-see-if-a-user-is-logged-in-is-authenticated-fully) apply. 
+For example ``IS_AUTHENTICATED_ANONYMOUSLY`` is available to *all* visitors, guests as well as logged in users. 
+This means that *any* feature assigned to ``IS_AUTHENTICATED_ANONYMOUSLY`` will be available to *everyone*.
 
 #### Features Only For Guests ####
 
