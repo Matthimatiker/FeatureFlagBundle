@@ -33,9 +33,42 @@ Enable the bundle in your kernel:
 
 ## Usage ##
 
+Features are assigned to roles. You connect features and roles in your ``security.yml``
+via Symfony's well known [hierarchical roles](http://symfony.com/doc/current/book/security.html#hierarchical-roles):
+
+    security:
+        # ...
+        
+        role_hierarchy:
+            # Start with a role and assign the accessible features.
+            ROLE_USER:
+                - FEATURE_BLOG
+                
+            # You can organize your features in groups and assign sub-features.
+            # These are inherited just like roles.
+            FEATURE_BLOG:
+                - FEATURE_BLOG_WRITE
+                - FEATURE_BLOG_READ
+                
+            # Features may depend on IS_AUTHENTICATED_* permissions.
+            # That is useful to assign features to all visitors (logged in or not):
+            IS_AUTHENTICATED_ANONYMOUSLY:
+                - FEATURE_NEWSLETTER_REGISTRATION
+                
+            # The role ROLE_ANONYMOUS is used to assign features to visitors that are not logged in.
+            ROLE_ANONYMOUS:
+                - FEATURE_LOGIN
+
+central assignment
+can still check roles
+
+``FEATURE_*``
+
 - config
 - check
   - use feature wherever role can be used
+  - controller
+  - Twig
 
 ## Initialization Tasks (remove this block once you are done) ##
 
