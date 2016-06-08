@@ -59,16 +59,26 @@ via Symfony's well known [hierarchical roles](http://symfony.com/doc/current/boo
             ROLE_ANONYMOUS:
                 - FEATURE_LOGIN
 
-central assignment
-can still check roles
+To distinguish features from roles, they are prefixed with ``FEATURE_*``.
+The ``security.yml`` is the central place to map features to roles. Access should be checked against 
+the features using the existing mechanisms in Symfony. Of course you can also still check access against 
+roles, although it should not be necessary.
 
-``FEATURE_*``
+You can check access to contoller actions in the [same way as with roles](http://symfony.com/doc/current/book/security.html#securing-controllers-and-other-code):
 
-- config
-- check
-  - use feature wherever role can be used
-  - controller
-  - Twig
+    /**
+     * @Security("has_role('FEATURE_NEWSLETTER_REGISTRATION')")
+     */
+    public function myAction($name)
+    {
+        // ...
+    }
+    
+Within your Twig templates, you can use the [is_granted() function](http://symfony.com/doc/current/book/security.html#access-control-in-templates):
+
+    {% if is_granted('FEATURE_NEWSLETTER_REGISTRATION') %}
+        <a href="...">Register now</a>
+    {% endif %}
 
 ## Initialization Tasks (remove this block once you are done) ##
 
