@@ -88,7 +88,7 @@ You can check access to contoller actions in the [same way as with roles](http:/
     }
     
 #### Twig Templates #### 
-   
+
 Within your Twig templates, you can use the [is_granted() function](http://symfony.com/doc/current/book/security.html#access-control-in-templates):
 
     {% if is_granted('FEATURE_NEWSLETTER_REGISTRATION') %}
