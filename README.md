@@ -92,7 +92,19 @@ This means that *any* feature assigned to ``IS_AUTHENTICATED_ANONYMOUSLY`` will 
 
 #### Features Only For Guests ####
 
-ROLE_ANONYMOUS
+With standard Symfony it is not possible to assign roles to users that are not logged in.
+This bundle removes that limitation by introducing the special role ``ROLE_ANONYMOUS``.
+``ROLE_ANONYMOUS`` is *only* assigned to anonymous users. 
+Once a user logs in, she will lose that role.
+
+``ROLE_ANONYMOUS`` can be used in the [role hierarchy configuration](http://symfony.com/doc/current/book/security.html#hierarchical-roles)
+to assign features to guests:
+
+    ROLE_ANONYMOUS:
+        - FEATURE_LOGIN
+
+Managing guest features in the role hierarchy allows you to enable and disable these features via simple
+configuration change.
 
 ### Access Control ###
 
@@ -135,3 +147,11 @@ service.
 - Activate repository at [Coveralls](https://coveralls.io)
 - Publish at [Packagist](https://packagist.org/)
 - Create webhook that pushes repository updates to [Packagist](https://packagist.org/)
+
+## Known Issues and Limitations ##
+
+This bundle deals with managing access to features via security configuration, so a permission change also requires
+a configuration change.
+It does *not* provide means to enable and disable features on the fly, although that should (just to mention one approach) be possible via
+[dynamic roles](http://php-and-symfony.matthiasnoback.nl/2012/07/symfony2-security-creating-dynamic-roles-using-roleinterface/).
+However, on-the-fly feature management is out of scope for this bundle as it is a very application specific topic.
