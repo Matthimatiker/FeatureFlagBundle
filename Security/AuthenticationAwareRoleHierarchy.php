@@ -68,6 +68,20 @@ class AuthenticationAwareRoleHierarchy implements RoleHierarchyInterface
             }
         }
         $reachableRoles = $this->innerHierarchy->getReachableRoles($roles);
+        return $this->filterReachableRoles($reachableRoles);
+    }
+
+    /**
+     * Removes permissions that were passed to the inner hierarchy from the result list.
+     *
+     * The injected permissions are "artificial" and should not occur in the inherited roles
+     * list. Therefore, filtering is necessary.
+     *
+     * @param RoleInterface[] $reachableRoles
+     * @return RoleInterface[]
+     */
+    private function filterReachableRoles(array $reachableRoles)
+    {
         foreach ($reachableRoles as $key => $role) {
             /* @var $role RoleInterface */
             if (in_array($role->getRole(), $this->permissions, true)) {
