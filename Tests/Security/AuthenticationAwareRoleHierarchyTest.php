@@ -71,7 +71,8 @@ class AuthenticationAwareRoleHierarchyTest extends \PHPUnit_Framework_TestCase
                 $this->assertNotContains(AuthenticatedVoter::IS_AUTHENTICATED_REMEMBERED, $roleNames);
                 $this->assertNotContains(AuthenticatedVoter::IS_AUTHENTICATED_FULLY, $roleNames);
                 return true;
-            }));
+            }))
+            ->willReturn(array());
 
         $this->decorator->getReachableRoles(array());
     }
@@ -89,7 +90,8 @@ class AuthenticationAwareRoleHierarchyTest extends \PHPUnit_Framework_TestCase
                 $this->assertContains(AuthenticatedVoter::IS_AUTHENTICATED_REMEMBERED, $roleNames);
                 $this->assertContains(AuthenticatedVoter::IS_AUTHENTICATED_FULLY, $roleNames);
                 return true;
-            }));
+            }))
+            ->willReturn(array());
 
         $this->decorator->getReachableRoles(array());
     }

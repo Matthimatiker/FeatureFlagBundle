@@ -61,6 +61,13 @@ class AuthenticationAwareRoleHierarchy implements RoleHierarchyInterface
                 $roles[] = new Role($permission);
             }
         }
-        return $this->innerHierarchy->getReachableRoles($roles);
+        $reachableRoles = $this->innerHierarchy->getReachableRoles($roles);
+        foreach ($reachableRoles as $key => $role) {
+            /* @var $role RoleInterface */
+            if (in_array($role->getRole(), $permissions, true)) {
+                unset($reachableRoles[$key]);
+            }
+        }
+        return array_values($reachableRoles);
     }
 }
