@@ -28,6 +28,17 @@ class AuthenticationAwareRoleHierarchy implements RoleHierarchyInterface
     private $authorizationChecker = null;
 
     /**
+     * Permissions that are checked and passed to the inner hierarchy (if available).
+     *
+     * @var string[]
+     */
+    private $permissions = array(
+        AuthenticatedVoter::IS_AUTHENTICATED_ANONYMOUSLY,
+        AuthenticatedVoter::IS_AUTHENTICATED_REMEMBERED,
+        AuthenticatedVoter::IS_AUTHENTICATED_FULLY
+    );
+
+    /**
      * @param RoleHierarchyInterface $innerHierarchy
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
@@ -51,12 +62,7 @@ class AuthenticationAwareRoleHierarchy implements RoleHierarchyInterface
      */
     public function getReachableRoles(array $roles)
     {
-        $permissions = array(
-            AuthenticatedVoter::IS_AUTHENTICATED_ANONYMOUSLY,
-            AuthenticatedVoter::IS_AUTHENTICATED_REMEMBERED,
-            AuthenticatedVoter::IS_AUTHENTICATED_FULLY
-        );
-        foreach ($permissions as $permission) {
+        foreach ($this->permissions as $permission) {
             if ($this->authorizationChecker->isGranted($permission)) {
                 $roles[] = new Role($permission);
             }
@@ -64,7 +70,7 @@ class AuthenticationAwareRoleHierarchy implements RoleHierarchyInterface
         $reachableRoles = $this->innerHierarchy->getReachableRoles($roles);
         foreach ($reachableRoles as $key => $role) {
             /* @var $role RoleInterface */
-            if (in_array($role->getRole(), $permissions, true)) {
+            if (in_array($role->getRole(), $this->permissions, true)) {
                 unset($reachableRoles[$key]);
             }
         }
