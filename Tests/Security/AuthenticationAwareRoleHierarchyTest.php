@@ -109,6 +109,21 @@ class AuthenticationAwareRoleHierarchyTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('ROLE_TEST', $names);
     }
 
+    public function testFiltersIsAuthenticatedPermissionsFromInnerHierarchy()
+    {
+        $this->authorizationChecker->expects($this->any())
+            ->method('isGranted')
+            ->willReturn(true);
+        $this->innerHierarchy->expects($this->once())
+            ->method('getReachableRoles')
+            ->willReturn(array(new Role(AuthenticatedVoter::IS_AUTHENTICATED_ANONYMOUSLY)));
+
+        $roles = $this->decorator->getReachableRoles(array());
+
+        $names = $this->getRoleNames($roles);
+        $this->assertNotContains(AuthenticatedVoter::IS_AUTHENTICATED_ANONYMOUSLY, $names);
+    }
+
     /**
      * @param RoleInterface[]|mixed $roles
      * @return string[]
