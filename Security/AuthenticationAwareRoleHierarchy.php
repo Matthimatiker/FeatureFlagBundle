@@ -62,13 +62,24 @@ class AuthenticationAwareRoleHierarchy implements RoleHierarchyInterface
      */
     public function getReachableRoles(array $roles)
     {
+        $reachableRoles = $this->innerHierarchy->getReachableRoles($this->addGrantedPermissions($roles));
+        return $this->filterReachableRoles($reachableRoles);
+    }
+
+    /**
+     * Adds granted permissions to the provided role list.
+     *
+     * @param RoleInterface[] $roles
+     * @return RoleInterface[]
+     */
+    private function addGrantedPermissions(array $roles)
+    {
         foreach ($this->permissions as $permission) {
             if ($this->authorizationChecker->isGranted($permission)) {
                 $roles[] = new Role($permission);
             }
         }
-        $reachableRoles = $this->innerHierarchy->getReachableRoles($roles);
-        return $this->filterReachableRoles($reachableRoles);
+        return $roles;
     }
 
     /**
