@@ -1,7 +1,7 @@
 # FeatureFlagBundle #
 
 [![Build Status](https://travis-ci.org/Matthimatiker/FeatureFlagBundle.svg?branch=master)](https://travis-ci.org/Matthimatiker/FeatureFlagBundle)
-[![Coverage Status](https://coveralls.io/repos/Matthimatiker/FeatureFlagBundle/badge.svg?branch=master&service=github)](https://coveralls.io/github/Matthimatiker/FeatureFlagBundle?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/Matthimatiker/FeatureFlagBundle/badge.svg?branch=master)](https://coveralls.io/github/Matthimatiker/FeatureFlagBundle?branch=master)
 
 This bundle builds on Symfony's sophisticated security system and provides the means to assign features to roles.
 It helps you to:
