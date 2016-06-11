@@ -18,7 +18,7 @@ env:
     - SYMFONY_VERSION="3.0.*"
 
 before_script:
-    - composer self-update
+    - composer self-update --no-interaction
     # Simply install the locked dependencies...
     - sh -c "if [ '$SYMFONY_VERSION' = 'locked' ]; then composer install --no-interaction --prefer-source; fi"
     # ... or request a specific Symfony version if necessary...
