@@ -153,4 +153,4 @@ a configuration change.
 It does *not* provide means to enable and disable features on the fly, although that should be possible via
 [dynamic roles](http://php-and-symfony.matthiasnoback.nl/2012/07/symfony2-security-creating-dynamic-roles-using-roleinterface/)
 (just to mention one approach).
-However, on-the-fly feature management is out of scope for this bundle as it is a very application specific topic.
+However, on-the-fly feature management is currently out of scope for this bundle as it is a very application specific topic.
