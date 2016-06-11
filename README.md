@@ -141,11 +141,6 @@ or directly with the
 [security.authorization_checker](http://symfony.com/doc/current/book/security.html#securing-controllers-and-other-code)
 service.
 
-## Initialization Tasks (remove this block once you are done) ##
-
-- Publish at [Packagist](https://packagist.org/)
-- Create webhook that pushes repository updates to [Packagist](https://packagist.org/)
-
 ## Known Issues and Limitations ##
 
 This bundle deals with managing access to features via security configuration, so a permission change also requires
